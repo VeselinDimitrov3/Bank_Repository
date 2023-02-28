@@ -20,9 +20,9 @@ public class CurrencyConvertor {
                 .build();
     }
 
-    public CurrencyResponse toCurrencyResponse (Currency currency) {
+    public CurrencyResponse toCurrencyResponse (Currency currencyCoder) {
         return CurrencyResponse.builder()
-                .currencyName(currency.getCurrencyCode())
+                .currencyName(currencyCoder.getCurrencyCode())
                 .build();
     }
 }

@@ -3,6 +3,7 @@ package com.example.OldButGold.controller;
 
 import com.example.OldButGold.convertor.CurrencyConvertor;
 import com.example.OldButGold.entity.Currency;
+import com.example.OldButGold.impl.CurrencyImpl;
 import com.example.OldButGold.request.CurrencyRequest;
 import com.example.OldButGold.request.CurrencyResponse;
 import com.example.OldButGold.service.CurrencyService;
@@ -19,7 +20,7 @@ import java.util.Set;
 @RequestMapping(path = "/currencies")
 public class CurrencyController {
     @Autowired
-    CurrencyService currencyService;
+    CurrencyImpl currencyService;
     @Autowired
     CurrencyConvertor currencyConvertor;
 
@@ -53,6 +54,13 @@ public class CurrencyController {
     ResponseEntity<String> delete(@PathVariable Long id) {
         currencyService.deleteCurrency(id);
         return ResponseEntity.status(HttpStatus.OK).body("Currency deleted");
+    }
+
+    @GetMapping(path = "/code/{currencyCode}")
+    ResponseEntity<CurrencyResponse> getByName(@PathVariable String currencyCode){
+        return ResponseEntity
+                .status(HttpStatus.FOUND)
+                .body(currencyConvertor.toCurrencyResponse(currencyService.findByName(currencyCode)));
     }
 
 

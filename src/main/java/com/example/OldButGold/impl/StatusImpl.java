@@ -1,17 +1,19 @@
 package com.example.OldButGold.impl;
 
 import com.example.OldButGold.entity.Status;
+import com.example.OldButGold.exception.RecordNotFoundException;
 import com.example.OldButGold.repository.StatusRepository;
 import com.example.OldButGold.service.StatusService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.HashSet;
+import java.util.Optional;
 import java.util.Set;
 import java.util.stream.Collectors;
 
 @Service
 public class StatusImpl implements StatusService {
-
     private final StatusRepository statusRepository;
 
     @Autowired
@@ -31,11 +33,16 @@ public class StatusImpl implements StatusService {
 
     @Override
     public Status findById(Long id) {
-        return statusRepository.findById(id).orElseThrow();
+        return statusRepository.findById(id)
+                .orElseThrow(()-> new RecordNotFoundException(String.format("Status %s not found", id)));
     }
 
     @Override
     public Set<Status> findAll() {
-        return statusRepository.findAll().stream().collect(Collectors.toSet());
+        return new HashSet<>(statusRepository.findAll());
+    }
+    public Status findByName(String status) {
+        return Optional.ofNullable(statusRepository.findByStatus(status))
+                .orElseThrow(() -> new RecordNotFoundException(String.format("Status %s not found", status)));
     }
 }

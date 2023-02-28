@@ -19,7 +19,6 @@ public class Transaction {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id", nullable = false)
     private Long id;
-
     private BigDecimal amount;
     @ManyToOne
     @JsonManagedReference

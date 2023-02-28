@@ -5,14 +5,15 @@ import org.springframework.boot.actuate.autoconfigure.security.servlet.Managemen
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.autoconfigure.security.servlet.SecurityAutoConfiguration;
 import org.springframework.context.annotation.Bean;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
 @SpringBootApplication(exclude = {SecurityAutoConfiguration.class, ManagementWebSecurityAutoConfiguration.class})
 public class OldButGoldApplication {
 
-//	@Bean
-//	public BCryptPasswordEncoder bCryptPasswordEncoder(){
-//		return new BCryptPasswordEncoder();
-//	}
+	@Bean
+	public BCryptPasswordEncoder bCryptPasswordEncoder(){
+		return new BCryptPasswordEncoder();
+	}
 
 	public static void main(String[] args) {
 		SpringApplication.run(OldButGoldApplication.class, args);
